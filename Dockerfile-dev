@@ -1,0 +1,7 @@
+FROM node:17-alpine
+WORKDIR /usr/src/app
+COPY package*.json .
+COPY prisma ./prisma/
+RUN npm install -g ts-node
+RUN npm install --no-progress
+EXPOSE 8080

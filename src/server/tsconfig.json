@@ -1,0 +1,14 @@
+{
+  "extends": "./../../tsconfig.base",
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "./**/*.test.*"
+  ],
+  "compilerOptions": {
+    "outDir": "./../../build/",
+    "module": "CommonJS",
+    "esModuleInterop": true
+  }
+}
