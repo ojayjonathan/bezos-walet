@@ -1,3 +1,3 @@
-import { Transaction } from './../../shared/types';
+import { Merchant, Transaction } from "./../../shared/types";
 
-export type OwnableTransaction = Transaction & { isOwnedByBezos: boolean }
+export type OwnableTransaction = Transaction & { merchant?: Merchant | null };

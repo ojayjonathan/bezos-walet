@@ -17,7 +17,7 @@ router.get('/',
 
     const frontendMerchants: MerchantSchema = res.locals.merchants.map((merchant: MerchantSchema) => ({
       name: merchant.name,
-      isOwnedByBezos: merchant.isOwnedByBezos,
+      tagId: merchant.tagId,
     }));
 
     return res.json(frontendMerchants);

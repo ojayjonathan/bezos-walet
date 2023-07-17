@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { MerchantSchema } from '../utils/types';
+import { PrismaClient } from "@prisma/client";
+import { MerchantSchema } from "../utils/types";
 
 const prisma = new PrismaClient();
 
@@ -16,17 +16,24 @@ export async function getMerchants(): Promise<MerchantSchema[]> {
  * @param merchant New or existing merchant.
  * @returns Boolean result of operation.
  */
-export async function updateOrCreate(merchant: MerchantSchema): Promise<boolean> {
+export async function updateOrCreate(
+  merchant: MerchantSchema
+): Promise<boolean> {
+  const tags = await prisma.tags.findMany();
+  const tagId = tags.find((tag) => tag.id === merchant.tagId)?.id;
+
   try {
     await prisma.merchants.upsert({
       where: {
         name: merchant.name,
       },
       update: {
-        isOwnedByBezos: merchant.isOwnedByBezos,
+        tagId: tagId,
       },
-      create: 
-        merchant
+      create: {
+        name: merchant.name,
+        tagId: tagId,
+      },
     });
     return true;
   } catch (err) {
@@ -42,7 +49,9 @@ export async function updateOrCreate(merchant: MerchantSchema): Promise<boolean>
  */
 export async function remove(merchant: MerchantSchema): Promise<boolean> {
   try {
-    const result = await prisma.merchants.deleteMany({ where: { name: merchant.name } });
+    const result = await prisma.merchants.deleteMany({
+      where: { name: merchant.name },
+    });
     return result.count > 0;
   } catch (err) {
     console.error(err);

@@ -1,15 +1,38 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const SEED_DATA = [
-  { name: 'Amazon', isOwnedByBezos: true },
-  { name: 'Washington Post', isOwnedByBezos: true },
-  { name: 'Whole Foods', isOwnedByBezos: true },
-  { name: 'Blue Origin', isOwnedByBezos: true },
-];
 
 async function main() {
+  try {
+    await prisma.merchants.deleteMany();
+    await prisma.tags.deleteMany();
+  } catch {}
+  
+  await prisma.tags.createMany({
+    data: [{ name: "Bezos" }, { name: "Musk" }],
+  });
+
+  const tags = await prisma.tags.findMany();
+
+  const SEED_DATA = [
+    { name: "Amazon", tagId: tags.find((tag) => tag.name === "Bezos")!.id },
+    {
+      name: "Washington Post",
+      tagId: tags.find((tag) => tag.name === "Bezos")!.id,
+    },
+    {
+      name: "Whole Foods",
+      tagId: tags.find((tag) => tag.name === "Bezos")!.id,
+    },
+    {
+      name: "Blue Origin",
+      tagId: tags.find((tag) => tag.name === "Bezos")!.id,
+    },
+    { name: "Tesla", tagId: tags.find((tag) => tag.name === "Musk")!.id },
+    { name: "SpaceX", tagId: tags.find((tag) => tag.name === "Musk")!.id },
+  ];
+
   await prisma.merchants.createMany({ data: SEED_DATA });
 }
 
