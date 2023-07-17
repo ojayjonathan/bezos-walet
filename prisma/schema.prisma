@@ -11,7 +11,16 @@ datasource db {
 }
 
 model merchants {
-  id    Int     @id @default(autoincrement())
-  name String  @unique
-  isOwnedByBezos Boolean @default(true)
+  id   Int      @id @default(autoincrement())
+  name String   @unique
+  tag  tags?     @relation(fields: [tagId], references: [id])
+  tagId Int?
 }
+
+model tags {
+  id   Int      @id @default(autoincrement())
+  name String   @unique
+  merchants merchants[]
+}
+
+

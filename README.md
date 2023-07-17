@@ -78,4 +78,3 @@ For all subsequent runs, you can use `npm run start-dev:image`.
 Again, you can access the website at [http://localhost:8080/](http://localhost:8080/). This page should update automatically when the client source code changes. The server also transpiles and restarts automatically when its source code changes.
 
 **Note**: You can safely shut down your docker images using `npm run stop-docker` and clean up the build folder (if running the development version) using `npm run clean`.
-# bezos-walet

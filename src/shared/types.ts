@@ -1,11 +1,15 @@
 export type Transaction = {
-  id: number,
-  merchantName: string,
-  date: Date,
-  amount: number,
-}
+  id: number;
+  merchantName: string;
+  date: Date;
+  amount: number;
+};
 
+export type Tag = {
+  name: string;
+  id: number;
+};
 export type Merchant = {
-  name: string,
-  isOwnedByBezos: boolean,
-}
+  name: string;
+  tagId?: number | null;
+};
